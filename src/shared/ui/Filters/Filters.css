@@ -1,0 +1,17 @@
+.filters {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.filters__section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filters__toggle-item {
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid #BABABA;
+}

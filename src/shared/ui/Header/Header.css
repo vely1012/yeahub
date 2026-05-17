@@ -1,0 +1,151 @@
+.header {
+    --background: white; 
+    --border: 2px solid #E8E8E8;
+
+    box-sizing: 'border-box';
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 65px;
+}
+
+.header:before {
+    background: white;
+    border: 2px solid #E8E8E8;
+}
+
+.header__nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    margin-right: auto;
+}
+
+@media (max-width: 600px) {
+    .header__nav {
+        gap: unset;
+    }
+
+    .header__logo-title {
+        display: none;
+    }
+}
+
+.header__nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+@media(max-width: 900px) {
+    .header__nav > .header__nav-link {
+        display: none;
+    }
+}
+
+.header__nav-logo {
+    padding: 6px 10px;
+    border-radius: 12px;
+}
+
+.header__nav-link {
+    position: relative;
+
+    height: fit-content;
+    padding: 6px 10px;
+    border-radius: 12px;
+
+    display: block;
+}
+.header__nav-link_active,
+.header__nav-link:hover {
+    background-color: #F8F8F8;
+}
+.header__nav-text:hover,
+.header__nav-link_active .header__nav-text {
+    color: var(--purp800);
+}
+.header__nav-text {
+    margin: 0;
+}
+
+.header__dropdown {
+    display: none;
+    position: relative;
+}
+
+.header__drop-text {
+    display: flex;
+    gap: 10px;
+}
+.header__drop-btn .arrow-icon {
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+@media (max-width: 900px) {
+    .header__dropdown {
+        /* display: flex;
+        flex-direction: column; */
+        display: initial;
+    }
+}
+
+.header__dropdown-content {
+    display: none;
+    
+}
+.header__dropdown_open .header__dropdown-content {
+    position: absolute;
+    top: 65px;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    
+    width: max-content;
+    padding: 5px;
+    background-color: white;
+    box-shadow: 0 0 10px -2px rgb(0 0 0/12%);
+}
+
+.header__auth {
+    display: flex;
+    gap: 25px;
+}
+
+.header__auth-dropdown {
+    display: none;
+}
+.header__auth-dropdown-content {
+        display: none;
+    }
+
+@media(max-width: 620px) {
+
+    .header__auth-dropdown {
+        display: initial;
+    }
+
+    .header__sign-in,
+    .header__sign-up { 
+        display: none;
+    }
+}
+
+.header__auth-dropdown_open .header__auth-dropdown-content {
+    position: absolute;
+    top: 83px;
+    right: 0;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    
+    width: max-content;
+    padding: 5px;
+    background-color: white;
+    box-shadow: 0 0 10px -2px rgb(0 0 0/12%);
+}

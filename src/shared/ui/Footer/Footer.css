@@ -1,0 +1,19 @@
+footer {
+    color: white;
+    padding: 30px 0 22px
+}
+
+footer:before {
+    background: #18003E;
+    border-radius: 20px 20px 0 0;
+}
+
+.gray-text {
+    color: #8C8C8C;
+}
+
+.footer__line {
+    border: none;
+    height: 1px;
+    background-color: #E6E6E619;
+}

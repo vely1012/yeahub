@@ -1,0 +1,15 @@
+.outlet {
+    margin: 40px 0 130px;
+}
+
+@media (max-width: 1000px) {
+    .outlet {
+        margin: 40px 0 80px;
+    }
+}
+
+@media (max-width: 600px) {
+    .outlet {
+        margin: 40px 0 40px;
+    }
+}
