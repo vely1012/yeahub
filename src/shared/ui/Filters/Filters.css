@@ -1,7 +1,39 @@
 .filters {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 25px;
+
+    background-color: white;
+    padding: 24px;
+    border-radius: 24px;
+
+    max-width: 390px;
+}
+
+.filters__close-btn {
+    display: none;
+
+    width: 20px;
+    height: 20px;
+    background-image: url("public/close-btn.svg");
+}
+
+@media(max-width: 1260px) {
+    .filters {
+        border-radius: 0;
+        box-shadow: 1px 5px 36px -20px #6A6376;
+        display: none;
+    }
+
+    .filters__close-btn {
+        display: initial;
+        margin-left: auto;
+    }
+
+    .filters_active {
+        display: flex;
+    }
+
 }
 
 .filters__section {
@@ -10,8 +42,27 @@
     gap: 10px;
 }
 
-.filters__toggle-item {
-    padding: 12px;
+.filters__section-title {
+    flex-basis: 100%;
+    margin: 0;
+
+    font-weight: 200;
+    font-size: 14px;
+    color: #474747;
+}
+
+.filters__toggle-filter {
+    padding: 8px 11px;
     border-radius: 12px;
-    border: 2px solid #BABABA;
+    border: 2px solid var(--black200);
+}
+
+.filters__toggle-filter_active {
+    border-color: var(--purp700);
+}
+
+.filters__unfold-btn {
+    color: var(--purp700);
+    text-decoration: underline;
+    flex-basis: 100%;
 }

@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 interface IQuestion {
   id: number,
   title: string,
+  description: string,
   rate: number,
   complexity: number,
   shortAnswer: string,

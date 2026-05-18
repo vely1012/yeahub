@@ -1,5 +1,5 @@
 import { useGetQuestionsQuery } from "@/shared/api/baseApi";
-import { useState, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import DropArrow from '@/assets/icons/menu-arrow.svg?react'
 import ForwardArrow from '@/assets/icons/forward-arrow.svg?react'
 import { Link } from "react-router-dom";
@@ -9,27 +9,26 @@ import Filters from "@/shared/ui/Filters/Filters";
 import './QuestionsListPage.css'
 
 function QuestionsList() {
-    // const [filters, setFilters] = useState({
-    //     skills: ['React', 'JavaScript', 'Redux']
-    // });
-
     const filters = { skills: ['JavaScript', 'React']};
     const [activeQuestionId, setActiveQuestionId] = useState<null | number>(null);
+    const filtersRef = useRef<HTMLElement | null>(null);
 
-    const QuestionsQuery = useGetQuestionsQuery({ page: 2 });
-
-    // console.log(JSON.stringify(questions, null, 4))
+    // const QuestionsQuery = useGetQuestionsQuery({ page: 2 });
+    const QuestionsQuery = useGetQuestionsQuery({});
 
     if(QuestionsQuery.status === 'pending') {
         return <h2>spinner</h2>
     }
 
     return (
-        <div className="questions-container">
+        <div className="questions-page-container wrapper">
             <main className="questions">
-                <h2 className="questions__header">Вопросы {filters.skills.join(', ')}</h2>
-                <hr className="question__hr"/>
-                <div className="questions__container">
+                <h2 className="questions__header">
+                    <p className="questions__header-text">Вопросы {filters.skills.join(', ')}</p>
+                    <button type="button" className="questions__toggle-filters-btn" onClick={() => { (filtersRef.current as HTMLElement).classList.add("filters_active") }} />
+                    </h2>
+                <hr className="questions__hr"/>
+                <div className="questions__content">
                     {
                         QuestionsQuery.currentData.data.map((q: IQuestion) =>
                             <div key={"question_" + q.id} className={"question " + (q.id === activeQuestionId ? "question_active":"")}>
@@ -39,8 +38,6 @@ function QuestionsList() {
                                     <DropArrow className="question__title-arrow" />
                                 </div>
                                 <div className="question__answer">
-                                    {/* <div className="question__data-row">
-                                    </div> */}
                                     <span className="question__badge" style={{'--content' : `"${q.rate}"`} as CSSProperties}>Рейтинг:</span>
                                     <span className="question__badge" style={{'--content' : `"${q.rate}"`} as CSSProperties}>Сложность:</span>
                                     {q.imageSrc ? <img src={q.imageSrc} /> : null}
@@ -50,9 +47,12 @@ function QuestionsList() {
                             </div>
                         )
                     }
+
                 </div>
             </main>
-            <Filters />
+            <aside className="filters__container">
+                <Filters ref={filtersRef} />
+            </aside>
         </div>
     )
 }

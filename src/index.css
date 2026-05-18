@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
 :root {
   --logo-bg: #4600E9;
@@ -7,6 +7,9 @@
   --purp700: #6A0BFF;
   --purp800: #5509CC;
   --brand-col: #5533FF;
+  --black200: #BABABA;
+  --black700: #474747;
+  --black800: #303030;
 
   min-height: 100%;
 
@@ -21,7 +24,7 @@
 
 body {
   margin: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Manrope", sans-serif;
 
   background-color: #F4F4F4;
 
@@ -71,22 +74,37 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
+hr {
+  border: none;
+  height: 1px;
+  background-color: currentColor;
+}
+
 /* ------------------------- */
 /* -------- utility -------- */
 /* ------------------------- */
 
 .wrapper {
-    margin: 0 auto;
-    max-width: 1200px;
+    /* margin: 0 auto; */
+    /* max-width: 1200px; */
+    /* padding: 0 calc(50% - 600px); */
+    padding-left: calc(50% - 600px);
+    padding-right: calc(50% - 600px);
 }
 @media(max-width: 1260px) {
     .wrapper {
-        margin: 0 30px;
+        /* margin: 0 30px; */
+        /* padding: 0 30px; */
+        padding-left: 30px;
+        padding-right: 30px;
     }
 }
 @media(max-width: 600px) {
     .wrapper {
-        margin: 0 10px;
+        /* margin: 0 10px; */
+        /* padding: 0 10px; */
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }
 
@@ -98,7 +116,7 @@ button:focus-visible {
   content: "";
   position: absolute;
   inset: 0;
-  margin: 0 calc(50% - 50vw);
+  /* margin: 0 calc(50% - 50vw); */
   z-index: -1;
 }
 

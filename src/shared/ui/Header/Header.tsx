@@ -16,10 +16,10 @@ function Header() {
     const headerNavLinkClass = ({ isActive }: NavLinkRenderProps) => isActive ? "header__nav-link header__nav-link_active" : "header__nav-link"
 
     return (
-        <header className="header section-with-bg">
+        <header className="header section-with-bg wrapper">
             <nav className='header__nav'>
                 <NavLink to="/" className="header__nav-logo">
-                    <YeahubLogo width="33px" height="33px" /*main='purple' secondary='yellow'*/ />
+                    <YeahubLogo width="33px" height="33px" />
                     <YeahubTitleLogo className="header__logo-title"/>
                 </NavLink>
                 <NavLink to="/questions" className={headerNavLinkClass}>

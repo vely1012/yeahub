@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
-    "trigger-deploy": "curl -X POST \"$(cat .deploy-hook-url)\""
+    "trigger-deploy": "node scripts/triggerDeploy.js"
   },
   "testEnvironment": "jsdom",
   "compilerOptions": {
