@@ -10,9 +10,20 @@ interface IQuestion {
   slug: string
 }
 
+const getBaseUrl = () => {
+  if (import.meta.env.PROD) {
+    return '/api/';
+  }
+  
+  // return 'https://localhost:3000/api/';
+  return 'https://api.yeatwork.ru';
+};
+
+
 export const baseApi = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.yeatwork.ru/' }),
+  // baseQuery: fetchBaseQuery({ baseUrl: 'https://api.yeatwork.ru/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: getBaseUrl() }),
   endpoints: (build) => ({
     getQuestions: build.query({
       query: (params) => ({

@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "trigger-deploy": "curl -X POST \"$(cat .deploy-hook-url)\""
   },
   "testEnvironment": "jsdom",
   "compilerOptions": {
