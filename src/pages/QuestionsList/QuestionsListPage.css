@@ -18,6 +18,8 @@
     position: relative;
 
     height: fit-content;
+
+    flex: 1;
 }
 
 .questions__content {
@@ -48,7 +50,7 @@
     border-radius: 8px;
     border: 1px solid var(--black200);
 
-    background-image: url("public/icons/filters-icon.svg");
+    background-image: url("/icons/filters-icon.svg");
     background-position: center center;
     background-repeat: no-repeat;
 }
@@ -104,14 +106,14 @@
 
 .question__answer {
     display: none;
+    flex-wrap: wrap;
+    gap: 0 30px;
+    
+    margin-top: 10px;
 }
 
 .question_active .question__answer {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0 30px;
-
-    margin-top: 10px;
 }
 
 .question__badge {
@@ -137,13 +139,26 @@
     border-radius: 6px;
 }
 
+.question__short-answer {
+    flex-basis: 100%;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* .question__short-answer:empty {
+    color: var(--black200);
+}
+.question__short-answer:empty:before {
+    content: "Ответа нет, как ни странно"
+} */
+
 .question__details-link {
     display: flex;
     align-items: center;
     gap: 10px;
     align-self: end;
     margin-left: auto;
-    /* color: var(--purp700); */
+    color: var(--purp700) !important;
 }
 
 

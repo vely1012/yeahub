@@ -8,12 +8,11 @@ import Filters from "@/shared/ui/Filters/Filters";
 
 import './QuestionsListPage.css'
 
-function QuestionsList() {
+function QuestionsListPage() {
     const filters = { skills: ['JavaScript', 'React']};
     const [activeQuestionId, setActiveQuestionId] = useState<null | number>(null);
     const filtersRef = useRef<HTMLElement | null>(null);
 
-    // const QuestionsQuery = useGetQuestionsQuery({ page: 2 });
     const QuestionsQuery = useGetQuestionsQuery({});
 
     if(QuestionsQuery.status === 'pending') {
@@ -30,7 +29,7 @@ function QuestionsList() {
                 <hr className="questions__hr"/>
                 <div className="questions__content">
                     {
-                        QuestionsQuery.currentData.data.map((q: IQuestion) =>
+                        QuestionsQuery.currentData.data.map((q: IQuestion, i: number) =>
                             <div key={"question_" + q.id} className={"question " + (q.id === activeQuestionId ? "question_active":"")}>
                                 <div className="question__title-wrapper" onClick={() => setActiveQuestionId(prev => prev == q.id ? null : q.id)}>
                                     <span className="question__title-mark">●</span>
@@ -42,13 +41,18 @@ function QuestionsList() {
                                     <span className="question__badge" style={{'--content' : `"${q.rate}"`} as CSSProperties}>Сложность:</span>
                                     {q.imageSrc ? <img src={q.imageSrc} /> : null}
                                     <p className="question__short-answer">{q.shortAnswer}</p>
-                                    <Link to={q.slug} state={q} className="question__details-link" style={{ color: "var(--purp700)"}}>Подробнее <ForwardArrow /></Link>
+                                    <Link to={q.slug} state={{question: q, queue: { currentIndex: i, slugs: QuestionsQuery.currentData.data.map(({ slug }: IQuestion) => slug)}}} className="question__details-link">Подробнее <ForwardArrow /></Link>
                                 </div>
                             </div>
                         )
                     }
-
                 </div>
+                {/* <div className="questions__page-nav">
+                    <button className="question__turn-page question__turn-page_prev"><ForwardArrow className="question__turn-page-arrow" /></button>
+                    
+                    ????
+                    <button className="question__turn-page question__turn-page_next"><ForwardArrow className="question__turn-page-arrow" /></button>
+                </div> */}
             </main>
             <aside className="filters__container">
                 <Filters ref={filtersRef} />
@@ -57,4 +61,4 @@ function QuestionsList() {
     )
 }
 
-export default QuestionsList
+export default QuestionsListPage

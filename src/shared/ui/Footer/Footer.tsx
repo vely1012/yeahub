@@ -15,12 +15,11 @@ function Footer() {
                 <Link to="/documents" className='footer__to-documents'>Документы</Link>
                 <span className="footer__luring-text">Ищите нас и в других соцсетях @yeahub_it</span>
                 <div className="footer__external-links">
-                    <a href="" className="footer__external-link"><img src="/public/social-media/Figma.svg" alt="" /></a>
-                    <a href="" className="footer__external-link"><img src="/public/social-media/Github_white.svg" alt="" /></a>
-                    <a href="" className="footer__external-link"><img src="/public/social-media/Telegram_white.svg" alt="" /></a>
-                    <a href="" className="footer__external-link"><img src="/public/social-media/tik_tok.svg" alt="" /></a>
-                    <a href="" className="footer__external-link"><img src="/public/social-media/Youtube.svg" alt="" /></a>
-
+                    <a href="" className="footer__external-link"><img src="/social-media/Figma.svg" alt="" /></a>
+                    <a href="" className="footer__external-link"><img src="/social-media/Github_white.svg" alt="" /></a>
+                    <a href="" className="footer__external-link"><img src="/social-media/Telegram_white.svg" alt="" /></a>
+                    <a href="" className="footer__external-link"><img src="/social-media/tik_tok.svg" alt="" /></a>
+                    <a href="" className="footer__external-link"><img src="/social-media/Youtube.svg" alt="" /></a>
                 </div>
             </div>
         </footer>

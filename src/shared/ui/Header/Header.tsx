@@ -20,32 +20,44 @@ function Header() {
             <nav className='header__nav'>
                 <NavLink to="/" className="header__nav-logo">
                     <YeahubLogo width="33px" height="33px" />
-                    <YeahubTitleLogo className="header__logo-title"/>
+                    <YeahubTitleLogo className="header__logo-title" />
                 </NavLink>
                 <NavLink to="/questions" className={headerNavLinkClass}>
                     <p className='header__nav-text'>База вопросов</p>
                 </NavLink>
-                <NavLink to="/training" className={headerNavLinkClass}>
+                {/* <NavLink to="/training" className={headerNavLinkClass}>
                     <p className='header__nav-text'>Тренажёр</p>
-                </NavLink>
-                <NavLink to="/resources" className={headerNavLinkClass}>
+                </NavLink> */}
+                <a href="#" className="header__nav-link">
+                    <p className='header__nav-text'>Тренажёр</p>
+                </a>
+                {/* <NavLink to="/resources" className={headerNavLinkClass}>
                     <p className='header__nav-text'>Материалы</p>
-                </NavLink>
+                </NavLink> */}
+                <a href="#" className="header__nav-link">
+                    <p className='header__nav-text'>Материалы</p>
+                </a>
                 <div className={"header__dropdown " + (dropdownOpen ? "header__dropdown_open" : "")}>
                     <a className="header__nav-link header__drop-btn" onClick={(e) => {
                         e.preventDefault();
                         setDropdownOpen(prev => !prev);
-                    }}><p className='header__nav-text header__drop-text'>Подготовка<MenuArrow className='arrow-icon'/></p></a>
+                    }}><p className='header__nav-text header__drop-text'>Подготовка<MenuArrow className='arrow-icon' /></p></a>
                     <div className="header__dropdown-content">
                         <NavLink to="/questions" className={headerNavLinkClass}>
                             <p className='header__nav-text'>База вопросов</p>
                         </NavLink>
-                        <NavLink to="/training" className={headerNavLinkClass}>
+                        {/* <NavLink to="/training" className={headerNavLinkClass}>
                             <p className='header__nav-text'>Тренажёр</p>
-                        </NavLink>
-                        <NavLink to="/resources" className={headerNavLinkClass}>
+                        </NavLink> */}
+                        <a href="#" className="header__nav-link">
+                            <p className='header__nav-text'>Тренажёр</p>
+                        </a>
+                        {/* <NavLink to="/resources" className={headerNavLinkClass}>
                             <p className='header__nav-text'>Материалы</p>
-                        </NavLink>
+                        </NavLink> */}
+                        <a href="#" className="header__nav-link">
+                            <p className='header__nav-text'>Материалы</p>
+                        </a>
                     </div>
                 </div>
             </nav>

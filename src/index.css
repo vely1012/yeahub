@@ -7,7 +7,8 @@
   --purp700: #6A0BFF;
   --purp800: #5509CC;
   --brand-col: #5533FF;
-  --black200: #BABABA;
+
+  --black200: #ABABAB;
   --black700: #474747;
   --black800: #303030;
 
@@ -68,7 +69,7 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Возвращаем фокус для доступности (но кастомный) */
+/* Custom focus */
 button:focus-visible {
   outline: 2px solid var(--purp700);
   outline-offset: 2px;
@@ -85,38 +86,33 @@ hr {
 /* ------------------------- */
 
 .wrapper {
-    /* margin: 0 auto; */
-    /* max-width: 1200px; */
-    /* padding: 0 calc(50% - 600px); */
-    padding-left: calc(50% - 600px);
-    padding-right: calc(50% - 600px);
+  padding-left: calc(50% - 600px);
+  padding-right: calc(50% - 600px);
 }
+
 @media(max-width: 1260px) {
-    .wrapper {
-        /* margin: 0 30px; */
-        /* padding: 0 30px; */
-        padding-left: 30px;
-        padding-right: 30px;
-    }
+  .wrapper {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 }
+
 @media(max-width: 600px) {
-    .wrapper {
-        /* margin: 0 10px; */
-        /* padding: 0 10px; */
-        padding-left: 10px;
-        padding-right: 10px;
-    }
+  .wrapper {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 
 .section-with-bg {
   position: relative;
   max-width: 100%;
 }
+
 .section-with-bg:before {
   content: "";
   position: absolute;
   inset: 0;
-  /* margin: 0 calc(50% - 50vw); */
   z-index: -1;
 }
 
@@ -126,9 +122,10 @@ hr {
 }
 
 .no-scroll {
-  -ms-overflow-style: none;  /* IE и Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
 }
+
 .no-scroll::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
@@ -139,8 +136,9 @@ hr {
   border-radius: 12px;
   color: white;
 }
+
 .main-btn:hover {
-  background:  color-mix(in srgb, var(--purp700) 100%, black 15%);
+  background: color-mix(in srgb, var(--purp700) 100%, black 15%);
 }
 
 .secondary-btn {

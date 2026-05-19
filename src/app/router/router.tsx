@@ -1,8 +1,8 @@
 import { createBrowserRouter, /*Navigate*/ } from 'react-router-dom'
 import Layout from '@/shared/ui/Layout/Layout'
 import HomePage from '@/pages/HomePage/HomePage'
-import ExactQuestion from '@/pages/ExactQuestionPage/ExactQuestionPage'
-import QuestionsList from '@/pages/QuestionsList/QuestionsListPage'
+import ExactQuestionPage from '@/pages/ExactQuestionPage/ExactQuestionPage'
+import QuestionsListPage from '@/pages/QuestionsList/QuestionsListPage'
 
 export const router = createBrowserRouter([
     {
@@ -19,11 +19,11 @@ export const router = createBrowserRouter([
 
                     {
                         index: true,
-                        element: <QuestionsList />,
+                        element: <QuestionsListPage />,
                     },
                     {
-                        path: ':questionId',
-                        element: <ExactQuestion />
+                        path: ':questionSlug',
+                        element: <ExactQuestionPage />
                     },
                 ]
             },

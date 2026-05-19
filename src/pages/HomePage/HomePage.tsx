@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom"
 
 function HomePage() {
-    return <div style={{ height: "100px", backgroundColor: "white" }}>this page is still in develpment. you can browse <Link to="/questions">interview questions database</Link></div>
+    return (
+        <div style={{ padding: "30px"}}>
+            Главная страница всё ещё находится в разработке, но Вы можете ознакомиться с <Link to="/questions" style={{ color: "var(--purp700)"}}>базой вопросов с собеседований</Link>
+        </div>
+    )
 }
 
 export default HomePage

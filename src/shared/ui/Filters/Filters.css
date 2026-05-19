@@ -15,7 +15,7 @@
 
     width: 20px;
     height: 20px;
-    background-image: url("public/close-btn.svg");
+    background-image: url("/close-btn.svg");
 }
 
 @media(max-width: 1260px) {

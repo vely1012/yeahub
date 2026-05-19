@@ -35,8 +35,11 @@ export const baseApi = createApi({
     getQuestionById: build.query<IQuestion, string>({
       query: (id) => `questions/public-questions/${id}`,
     }),
+    getQuestionBySlug: build.query<IQuestion, string>({
+      query: (slug) => `questions/by-slug/${slug}`
+    })
   }),
 });
 
 export type { IQuestion };
-export const { useGetQuestionsQuery, useGetQuestionByIdQuery } = baseApi;
+export const { useGetQuestionsQuery, useGetQuestionByIdQuery, useGetQuestionBySlugQuery } = baseApi;
