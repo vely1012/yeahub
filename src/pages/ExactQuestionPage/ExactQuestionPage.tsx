@@ -31,6 +31,8 @@ function ExactQuestionPage() {
 
         if(!queue) {
             navigate("/questions");
+        } else {
+            navigate(-1);
         }
     }
 
@@ -74,7 +76,7 @@ function ExactQuestionPage() {
             </div>
             <div className="question-part question-part_navigation">
                 <button type="button" className="question__nav-btn question__nav-btn_prev" onClick={prevQuestionHandler} disabled={!queue || queue.currentIndex === 0}><ArrowSvg className="question__nav-arrow" />Пердыдущий</button>
-                <button type="button" className="question__nav-btn question__nav-btn_next" onClick={nextQuestionHandler} disabled={queue && queue.currentIndex !== queue.slugs.length - 1}>Следующий <ArrowSvg className="question__nav-arrow" /></button>  
+                <button type="button" className="question__nav-btn question__nav-btn_next" onClick={nextQuestionHandler} disabled={queue && queue.currentIndex === queue.slugs.length - 1}>Следующий <ArrowSvg className="question__nav-arrow" /></button>  
             </div>
             <div className="question-part">
                 <p>{question.shortAnswer}</p>
