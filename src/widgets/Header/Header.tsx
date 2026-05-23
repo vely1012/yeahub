@@ -1,6 +1,6 @@
 import { NavLink, type NavLinkRenderProps } from 'react-router-dom'
 // import YeahubLogo from '@/assets/icons/yeahub-logo.svg?react';
-import { YeahubLogo, YeahubTitleLogo } from '@/shared/ui/YeahubLogos/YeahubLogos'
+import { YeahubLogo, YeahubTitleLogo } from '@/shared/ui/Logo/YeahubLogos'
 // import YeahubTitleLogo from '@/assets/icons/yeahub-title-logo.svg?react';
 
 import { useState } from 'react'

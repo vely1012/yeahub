@@ -29,7 +29,7 @@ export const baseApi = createApi({
     getQuestions: build.query({
       query: (params) => ({
         url: "questions/public-questions",
-        params: params
+        params: {...params, complexity: params.difficulties}
       }),
     }),
     getQuestionById: build.query<IQuestion, string>({
@@ -37,9 +37,26 @@ export const baseApi = createApi({
     }),
     getQuestionBySlug: build.query<IQuestion, string>({
       query: (slug) => `questions/by-slug/${slug}`
-    })
+    }),
+    getSpecializations: build.query({
+      query: () => 'specializations'
+    }),
+    getSpecializationsSlugs: build.query({
+      query: () => 'specializations/slugs'
+    }),
+    getSkills: build.query({
+      query: () => 'skills'
+    }),
+    
   }),
 });
 
 export type { IQuestion };
-export const { useGetQuestionsQuery, useGetQuestionByIdQuery, useGetQuestionBySlugQuery } = baseApi;
+export const { 
+  useGetQuestionsQuery, 
+  useGetQuestionByIdQuery, 
+  useGetQuestionBySlugQuery, 
+  useGetSpecializationsQuery, 
+  useGetSpecializationsSlugsQuery, 
+  useGetSkillsQuery 
+} = baseApi;

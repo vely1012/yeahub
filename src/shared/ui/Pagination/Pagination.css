@@ -1,0 +1,47 @@
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagination__turn-page {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px solid var(--purp700);
+    display: grid;
+    padding: 2px;
+}
+
+.pagination__turn-page:disabled {
+    border-color: var(--black200);
+}
+
+.pagination__page-index:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    -webkit-user-select: none;
+    /* Safari */
+    user-select: none;
+}
+
+.pagination__page-index_current {
+    border-radius: 2px;
+    padding: 0.25em 0.5em;
+    background: var(--purp700);
+    color: white;
+}
+.pagination__page-index_current:hover {
+    cursor: default;
+    text-decoration: none;
+}
+
+.pagination__turn-page-arrow {
+    color: var(--purp700);
+}
+
+.pagination__turn-page-arrow_left {
+    transform: rotate(180deg);
+}

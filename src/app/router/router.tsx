@@ -1,5 +1,5 @@
 import { createBrowserRouter, /*Navigate*/ } from 'react-router-dom'
-import Layout from '@/shared/ui/Layout/Layout'
+import Layout from '@/app/Layout'
 import HomePage from '@/pages/HomePage/HomePage'
 import ExactQuestionPage from '@/pages/ExactQuestionPage/ExactQuestionPage'
 import QuestionsListPage from '@/pages/QuestionsList/QuestionsListPage'

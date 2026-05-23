@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import './Footer.css'
-import { YeahubTitleLogo } from '../YeahubLogos/YeahubLogos';
+import { YeahubTitleLogo } from '../../shared/ui/Logo/YeahubLogos';
 
 function Footer() {
     return (
