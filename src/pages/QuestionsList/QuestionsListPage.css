@@ -10,6 +10,19 @@
     }
 }
 
+@media (max-width: 1260px) {
+    .questions-page-container {
+        display: grid;
+    }
+    .questions-page-container * {
+        grid-area: 1/1;
+    }
+
+    .filters__container {
+        justify-self: end;
+    }
+}
+
 .questions {
     padding: 20px;
     border-radius: 20px;
@@ -169,9 +182,20 @@
 @media(max-width: 1260px) {
     .filters__container {
         width: min(320px, 100%);
-        position: absolute;
-        top: 0;
-        right: 0;
+        margin: -40px -30px 0 0;
         z-index: 3;
+        display: none;
+    }
+    
+    .filters__container_active {
+        display: initial;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .filters__container {
+        margin: -40px -10px 0 0;
+        max-width: 100%;
     }
 }

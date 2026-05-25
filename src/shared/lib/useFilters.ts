@@ -1,10 +1,10 @@
-// shared/lib/useFilters.ts
 import { useBatchUpdateQuery, useQueryParam } from './useQueryParam';
+import type { DifficultyRange } from '@/widgets/Filters/types';
 
 export interface QuestionFilters {
     specializationSlug?: string;
     skills?: number[];
-    difficulties?: string[];
+    difficulties?: number[];
 }
 
 export function useQuestionFilters() {
@@ -14,29 +14,30 @@ export function useQuestionFilters() {
 
     const batchUpdate = useBatchUpdateQuery();
     
-    // Преобразуем строку в массив чисел
     const skills = skillsStr
         ?.split(',')
         .filter(Boolean)
         .map(Number)
         .filter(id => !isNaN(id)) || [];
     
-    const difficulties = difficultiesStr?.split(',')?.filter(Boolean) || [];
+    const difficulties = difficultiesStr
+        ?.split(',')
+        .filter(Boolean)
+        .map(Number)
+        .filter(id => !isNaN(id)) || [];;
     
     const setSpecialization = (slug: string) => {
         setSpecializationSlug(slug);
     };
     
-    // Принимаем массив чисел
     const setSkills = (newSkillIds: number[]) => {
         setSkillsStr(newSkillIds.length ? newSkillIds.join(',') : "");
     };
 
-    const setDifficulties = (newDifficulties: string[]) => {
+    const setDifficulties = (newDifficulties: number[]) => {
         setDifficultiesStr(newDifficulties.length ? newDifficulties.join(",") : "");
     }
     
-    // toggle принимает number (id навыка)
     const toggleSkill = (skillId: number) => {
         const current = skills;
         const updated = current.includes(skillId)
@@ -44,14 +45,15 @@ export function useQuestionFilters() {
             : [...current, skillId];
         setSkills(updated);
     };
-
-    const toggleDifficulty = (diffToToggle: string) => {
+    
+    const toggleDifficultyRange = ({ from, to }: DifficultyRange) => {
         const current = difficulties;
-        const updated = current.includes(diffToToggle)
-            ? current.filter(d => d !== diffToToggle)
-            : [...current, diffToToggle];
+        const updated = current.includes(from) ?
+        current.filter((d: number) => (d > to || d < from)) :
+        current.concat(Array.from({ length: to - from + 1 }).map((_, i) => from + i))
+
         setDifficulties(updated);
-    };
+    }
     
     const clearFilters = () => {
         batchUpdate({ 
@@ -66,7 +68,7 @@ export function useQuestionFilters() {
         setSpecialization,
         setSkills,
         toggleSkill,
-        toggleDifficulty,
+        toggleDifficultyRange,
         clearFilters,
     };
 }
