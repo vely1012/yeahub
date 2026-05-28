@@ -129,42 +129,11 @@
     display: flex;
 }
 
-.question__badge {
-    position: relative;
-
-    font-size: 14px;
-    height: fit-content;
-    padding: 6px 10px;
-    border-radius: 8px;
-
-    display: block;
-
-    background-color: #F8F8F8;
-}
-
-.question__badge:after {
-    content: var(--content);
-
-    background-color: var(--purp700);
-    color: white;
-    margin-left: 12px;
-    padding: 2px 4px;
-    border-radius: 6px;
-}
-
 .question__short-answer {
     flex-basis: 100%;
     word-break: break-word;
     overflow-wrap: break-word;
 }
-
-
-/* .question__short-answer:empty {
-    color: var(--black200);
-    }
-    .question__short-answer:empty:before {
-        content: "Ответа нет, как ни странно"
-} */
 
 .question__details-link {
     display: flex;

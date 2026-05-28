@@ -1,15 +1,15 @@
 import { NavLink, type NavLinkRenderProps } from 'react-router-dom'
-// import YeahubLogo from '@/assets/icons/yeahub-logo.svg?react';
 import { YeahubLogo, YeahubTitleLogo } from '@/shared/ui/Logo/YeahubLogos'
-// import YeahubTitleLogo from '@/assets/icons/yeahub-title-logo.svg?react';
 
 import { useState } from 'react'
 import BurgerIcon from "@/assets/icons/burger.svg?react"
 import MenuArrow from '@/assets/icons/menu-arrow.svg?react'
 
 import './Header.css'
+import { useClickOutside } from '@/shared/lib/useClickOutside'
 
 function Header() {
+    const dropdownRef = useClickOutside<HTMLDivElement>(() => { setDropdownOpen(false) })
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [authDropdownOpen, setAuthDropdownOpen] = useState(false);
 
@@ -25,19 +25,13 @@ function Header() {
                 <NavLink to="/questions" className={headerNavLinkClass}>
                     <p className='header__nav-text'>База вопросов</p>
                 </NavLink>
-                {/* <NavLink to="/training" className={headerNavLinkClass}>
-                    <p className='header__nav-text'>Тренажёр</p>
-                </NavLink> */}
                 <a href="#" className="header__nav-link">
                     <p className='header__nav-text'>Тренажёр</p>
                 </a>
-                {/* <NavLink to="/resources" className={headerNavLinkClass}>
-                    <p className='header__nav-text'>Материалы</p>
-                </NavLink> */}
                 <a href="#" className="header__nav-link">
                     <p className='header__nav-text'>Материалы</p>
                 </a>
-                <div className={"header__dropdown " + (dropdownOpen ? "header__dropdown_open" : "")}>
+                <div className={"header__dropdown " + (dropdownOpen ? "header__dropdown_open" : "")} ref={dropdownRef}>
                     <a className="header__nav-link header__drop-btn" onClick={(e) => {
                         e.preventDefault();
                         setDropdownOpen(prev => !prev);
@@ -46,15 +40,9 @@ function Header() {
                         <NavLink to="/questions" className={headerNavLinkClass}>
                             <p className='header__nav-text'>База вопросов</p>
                         </NavLink>
-                        {/* <NavLink to="/training" className={headerNavLinkClass}>
-                            <p className='header__nav-text'>Тренажёр</p>
-                        </NavLink> */}
                         <a href="#" className="header__nav-link">
                             <p className='header__nav-text'>Тренажёр</p>
                         </a>
-                        {/* <NavLink to="/resources" className={headerNavLinkClass}>
-                            <p className='header__nav-text'>Материалы</p>
-                        </NavLink> */}
                         <a href="#" className="header__nav-link">
                             <p className='header__nav-text'>Материалы</p>
                         </a>

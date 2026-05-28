@@ -1,0 +1,145 @@
+/* .aside-panel {
+    max-width: 390px;
+    background-color: white;
+    padding: 20px;
+}
+
+@media (min-width: 1261px) {
+    .aside-panel {
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 1260px) {
+    .aside-panel {
+        justify-self: end;
+    }
+}
+
+
+@media(max-width: 1260px) {
+    .aside-panel {
+        width: min(320px, 100%);
+        margin: -40px -30px 0 0;
+        z-index: 3;
+        display: none;
+    }
+    
+    .aside-panel_active {
+        display: initial;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .aside-panel {
+        margin: -40px -10px 0 0;
+        max-width: 100%;
+    }
+}
+
+
+.aside-panel__close-btn {
+    display: none;
+
+    width: 20px;
+    height: 20px;
+    background-image: url("/close-btn.svg");
+
+    margin-bottom: -20px;
+}
+
+@media(max-width: 1260px) {
+
+    .aside-panel__close-btn {
+        display: initial;
+        margin-left: auto;
+    }
+}
+
+
+.aside-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    background-color: white;
+    padding: 24px;
+    border-radius: 24px;
+
+    max-width: 390px;
+}
+
+@media(max-width: 1260px) {
+    .aside-panel {
+        border-radius: 0;
+        box-shadow: 1px 5px 36px -20px #6A6376;
+        display: flex;
+    }
+} */
+
+/* Базовые стили (работают на всех размерах) */
+.aside-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    background-color: white;
+    padding: 24px;
+    border-radius: 24px;
+    max-width: 390px;
+}
+
+/* Десктоп (≥1261px) */
+@media (min-width: 1261px) {
+    .aside-panel {
+        border-radius: 20px;
+        align-self: start;
+
+    }
+    
+    .aside-panel__close-btn {
+        display: none;
+    }
+}
+
+/* Планшет/мобиль (≤1260px) — панель перекрывает контент, но остаётся в grid-ячейке */
+@media (max-width: 1260px) {
+    .aside-panel {
+        justify-self: end;
+        align-self: start;
+        width: min(320px, 100%);
+        margin: -40px -30px 0 0;
+        z-index: 3;
+        border-radius: 0;
+        box-shadow: 1px 5px 36px -20px #6A6376;
+        display: none;
+    }
+    
+    .aside-panel_active {
+        display: flex;
+    }
+    
+    .aside-panel__close-btn {
+        display: block;
+        width: 20px;
+        height: 20px;
+        background-image: url("/close-btn.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-left: auto;
+        margin-bottom: -20px;
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+    }
+}
+
+/* Маленькие мобильные экраны (≤600px) */
+@media (max-width: 600px) {
+    .aside-panel {
+        margin: -40px -10px 0 0;
+        max-width: 100%;
+        width: calc(100% - 20px);
+    }
+}

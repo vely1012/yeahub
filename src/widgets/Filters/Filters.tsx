@@ -2,10 +2,10 @@ import { useGetSkillsQuery, useGetSpecializationsQuery } from '@/shared/api/base
 import { useQuestionFilters } from '@/shared/lib/useFilters';
 import type { FilterQueryResult, Specialization, Skill, DifficultyRange } from './types';
 import SearchIcon from '@/assets/icons/search-icon.svg?react'
-import { useEffect, useState, type ChangeEvent } from 'react';
+import { useEffect, useState, type ChangeEvent, useRef } from 'react';
+import useQuestionSearch from '@/shared/lib/useQuestionSearch';
 
 import './Filters.css';
-import useQuestionSearch from '@/shared/lib/useQuestionSearch';
 
 interface FilterRowProps<ItemType> {
     title: string
@@ -64,25 +64,17 @@ function QueryFilterRow<ItemType>({ query, getItems, Fallback, onError, ...nativ
 }
 
 interface FiltersProps {
-    setActive: (newActive: boolean) => void
-    setSkills: (skills: string[]) => void
+    setSkills: React.Dispatch<React.SetStateAction<string[]>>
 }
 
-function Filters({ setActive, setSkills }: FiltersProps) {
+function Filters({ setSkills }: FiltersProps) {
     const { filters, setSpecialization, toggleSkill, toggleDifficultyRange, clearFilters } = useQuestionFilters();
     const { questionSearch, setQuestionSearch } = useQuestionSearch();
-    const [skillNames, setSkillNames] = useState<string[]>([]);
-    const toggleSkillName = (skillName: string) => {
-        const current = skillNames;
-        const updated = current.includes(skillName) ? current.filter(sn => sn === skillName) : [...current, skillName];
-
-        setSkillNames(updated);
-    }
-
-    useEffect(() => {
-        setSkills(skillNames)
-    })
-
+    const [skillNames, setSkillNames] = useState<string[]>(() => {
+        // Инициализация при первом рендере (без запроса к API)
+        return [];
+    });
+    
     const specializationsQuery = useGetSpecializationsQuery({});
     const skillsQuery = useGetSkillsQuery({});
 
@@ -91,19 +83,45 @@ function Filters({ setActive, setSkills }: FiltersProps) {
         { from: 4, to: 6 },
         { from: 7, to: 8 },
         { from: 9, to: 10 },
-        
     ];
 
+    // Инициализация skillNames из filters.skills при загрузке данных (только один раз)
+    const isInitialized = useRef(false);
+    useEffect(() => {
+        if (isInitialized.current) return;
+        
+        if (skillsQuery.data?.data && filters.skills.length > 0) {
+            const initialNames = filters.skills
+                .map(id => skillsQuery.data?.data.find((s: Skill) => s.id === id)?.title)
+                .filter(Boolean);
+            setSkillNames(initialNames);
+            isInitialized.current = true;
+        }
+    }, [skillsQuery.data, filters.skills]);
+
+    const toggleSkillName = (skillName: string) => {
+        setSkillNames(prev => 
+            prev.includes(skillName) 
+                ? prev.filter(sn => sn !== skillName)
+                : [...prev, skillName]
+        );
+    }
+
+    // Обновляем родителя только при изменении skillNames, но не при первом рендере
+    const isFirstRender = useRef(true);
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+        setSkills(skillNames);
+    }, [skillNames, setSkills]);
+
     return (
-        <div className="filters">
-            <button
-                type="button"
-                className="filters__close-btn"
-                onClick={() => setActive(false)}
-            />
+        <>
             <div className="filters__search-wrapper">
                 <SearchIcon />
-                <input type="text" value={ questionSearch ?? "" } onChange={(e: ChangeEvent) => { setQuestionSearch((e.target as HTMLInputElement).value) }} placeholder="Введите запрос..." className='filters__search' />
+                <input type="text" value={questionSearch ?? ""} onChange={(e: ChangeEvent) => { setQuestionSearch((e.target as HTMLInputElement).value) }} placeholder="Введите запрос..." className='filters__search' />
             </div>
 
             <QueryFilterRow<Specialization>
@@ -143,7 +161,7 @@ function Filters({ setActive, setSkills }: FiltersProps) {
                             key={item.id}
                             type="button"
                             className={`filters__toggle-filter ${filters.skills.includes(item.id) ? 'filters__toggle-filter_active' : ''} filters__icon-filter`}
-                            onClick={() => { toggleSkill(item.id); toggleSkillName(item.title) } }
+                            onClick={() => { toggleSkillName(item.title); toggleSkill(item.id) }}
                         >
                             <img
                                 src={item.imageSrc ?? "/icons/skill-fallback-icon.svg"}
@@ -156,16 +174,16 @@ function Filters({ setActive, setSkills }: FiltersProps) {
             </QueryFilterRow>
 
             <FilterRow
-            title="Уровень сложности"
-            items={difficulties}
+                title="Уровень сложности"
+                items={difficulties}
             >
                 {
-                    ({from, to}: DifficultyRange) => (
+                    ({ from, to }: DifficultyRange) => (
                         <button
                             key={`toggle-diffs--${from}-${to}`}
                             type="button"
                             className={`filters__toggle-filter ${filters.difficulties.includes(from) ? 'filters__toggle-filter_active' : ''}`}
-                            onClick={() => toggleDifficultyRange({from, to})}
+                            onClick={() => toggleDifficultyRange({ from, to })}
                         >
                             {`${from}-${to}`}
                         </button>
@@ -176,8 +194,9 @@ function Filters({ setActive, setSkills }: FiltersProps) {
             <button type="button" className="filters__reset-btn" onClick={clearFilters}>
                 Сбросить все фильтры
             </button>
-        </div>
+        </> 
     );
 }
+
 
 export default Filters;

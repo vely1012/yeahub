@@ -1,3 +1,4 @@
+import type { Specialization } from '@/widgets/Filters/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 interface IQuestion {
@@ -7,30 +8,50 @@ interface IQuestion {
   rate: number,
   complexity: number,
   shortAnswer: string,
+  longAnswer: string,
   imageSrc?: string,
-  slug: string
+  slug: string,
+  questionSpecializations: Specialization[]
 }
 
 const getBaseUrl = () => {
   if (import.meta.env.PROD) {
     return '/api/';
   }
-  
-  // return 'https://localhost:3000/api/';
+
   return 'https://api.yeatwork.ru';
 };
 
 
 export const baseApi = createApi({
   reducerPath: 'api',
-  // baseQuery: fetchBaseQuery({ baseUrl: 'https://api.yeatwork.ru/' }),
   baseQuery: fetchBaseQuery({ baseUrl: getBaseUrl() }),
   endpoints: (build) => ({
     getQuestions: build.query({
-      query: (params) => ({
-        url: "questions/public-questions",
-        params: {...params, complexity: params.difficulties}
-      }),
+      query: (params) => {
+        const paramsProxy = { ...params };
+
+        // Переименовываем difficulties → complexity
+        if (paramsProxy.difficulties) {
+          paramsProxy.complexity = [...paramsProxy.difficulties];
+          delete paramsProxy.difficulties;
+        }
+
+        // Очищаем пустые значения
+        const cleanedParams: Record<string, any> = {};
+        for (const [key, value] of Object.entries(paramsProxy)) {
+          if (value === undefined || value === null) continue;
+          if (typeof value === 'string' && value === '') continue;
+          if (Array.isArray(value) && value.length === 0) continue;
+
+          cleanedParams[key] = value;
+        }
+
+        return {
+          url: "questions/public-questions",
+          params: cleanedParams,
+        };
+      },
     }),
     getQuestionById: build.query<IQuestion, string>({
       query: (id) => `questions/public-questions/${id}`,
@@ -47,16 +68,16 @@ export const baseApi = createApi({
     getSkills: build.query({
       query: () => 'skills'
     }),
-    
+
   }),
 });
 
 export type { IQuestion };
-export const { 
-  useGetQuestionsQuery, 
-  useGetQuestionByIdQuery, 
-  useGetQuestionBySlugQuery, 
-  useGetSpecializationsQuery, 
-  useGetSpecializationsSlugsQuery, 
-  useGetSkillsQuery 
+export const {
+  useGetQuestionsQuery,
+  useGetQuestionByIdQuery,
+  useGetQuestionBySlugQuery,
+  useGetSpecializationsQuery,
+  useGetSpecializationsSlugsQuery,
+  useGetSkillsQuery
 } = baseApi;

@@ -1,5 +1,5 @@
 import { useGetQuestionsQuery } from "@/shared/api/baseApi";
-import { useDeferredValue, useState, type CSSProperties } from "react";
+import { useDeferredValue, useState, /*type CSSProperties */} from "react";
 import DropArrow from '@/assets/icons/menu-arrow.svg?react'
 import ForwardArrow from '@/assets/icons/forward-arrow.svg?react'
 import { Link } from "react-router-dom";
@@ -7,10 +7,13 @@ import { type IQuestion } from "@/shared/api/baseApi";
 import Filters from "@/widgets/Filters/Filters";
 import { usePage } from "@/shared/ui/Pagination/usePage";
 import Pagination from "@/shared/ui/Pagination/Pagination";
-import { useQuestionFilters, type QuestionFilters } from "@/shared/lib/useFilters";
+import { useQuestionFilters } from "@/shared/lib/useFilters";
+import useQuestionSearch from "@/shared/lib/useQuestionSearch";
+import type { ExactQuestionLocationState } from "../ExactQuestionPage/ExactQuestionPage";
 
 import './QuestionsListPage.css'
-import useQuestionSearch from "@/shared/lib/useQuestionSearch";
+import AsidePanel from "@/shared/ui/AsidePanel/AsidePanel";
+import StatBadge from "@/shared/ui/StatBadge/StatBadge";
 
 function QuestionsListPage() {
     const [skills, setSkills] = useState<string[]>([]);
@@ -20,15 +23,15 @@ function QuestionsListPage() {
         <div className="questions-page-container wrapper">
             <main className="questions">
                 <h2 className="questions__header">
-                    <p className="questions__header-text">Вопросы {skills.join(', ')}</p>
+                    <p className="questions__header-text">Вопросы{skills.length > 0 ? (": " + skills.join(', ')  ) : ""}</p>
                     <button type="button" className="questions__toggle-filters-btn" onClick={() => setFiltersActive(prev => !prev)} />
                 </h2>
                 <hr className="questions__hr" />
                 <QuestionsListPage.QuestionsContent />
             </main>
-            <aside className={"filters__container " + (filtersActive ? "filters__container_active" : "")}>
-                <Filters setActive={setFiltersActive} setSkills={setSkills} />
-            </aside>
+            <AsidePanel active={filtersActive} setActive={setFiltersActive}>
+                <Filters setSkills={setSkills} />
+            </AsidePanel>
         </div>
     )
 }
@@ -41,14 +44,7 @@ QuestionsListPage.QuestionsContent = function () {
     const { questionSearch } = useQuestionSearch();
     const titleOrDescription = useDeferredValue(questionSearch);
 
-    const queryParams: Partial<QuestionFilters> & { page: number, titleOrDescription?: string } = { page, titleOrDescription };
-    for (const [key, value] of Object.entries(filters)) {
-        if (value && (!Array.isArray(value) || value.length > 0)) {
-            (queryParams as any)[key] = value;
-        }
-    }
-
-    const QuestionsQuery = useGetQuestionsQuery(queryParams);
+    const QuestionsQuery = useGetQuestionsQuery({ ...filters, page, titleOrDescription });
 
     if (QuestionsQuery.status === 'pending') {
         return <h2>spinner</h2>
@@ -70,11 +66,39 @@ QuestionsListPage.QuestionsContent = function () {
                             <DropArrow className="question__title-arrow" />
                         </div>
                         <div className="question__answer">
-                            <span className="question__badge" style={{ '--content': `"${q.rate}"` } as CSSProperties}>Рейтинг:</span>
-                            <span className="question__badge" style={{ '--content': `"${q.rate}"` } as CSSProperties}>Сложность:</span>
+                            {/* <span className="question__badge" style={{ '--content': `"${q.rate}"` } as CSSProperties}>Рейтинг:</span>
+                            <span className="question__badge" style={{ '--content': `"${q.rate}"` } as CSSProperties}>Сложность:</span> */}
+                            <StatBadge label="Рейтинг:" stat={q.rate.toString()}/>
+                            <StatBadge label="Сложность:" stat={q.complexity.toString()}/>
+                            
                             {q.imageSrc ? <img src={q.imageSrc} /> : null}
                             <p className="question__short-answer">{q.shortAnswer}</p>
-                            <Link to={q.slug} state={{ question: q, queue: { currentIndex: i, slugs: QuestionsQuery.currentData.data.map(({ slug }: IQuestion) => slug) } }} className="question__details-link">Подробнее <ForwardArrow /></Link>
+                            <Link
+                                className="question__details-link"
+                                to={q.slug}
+                                state={{
+                                    question: q,
+                                    queue: {
+                                        currentIndex: i,
+                                        titleOrDescription,
+                                        slugsMap: (() => {
+                                            const initialSlugsMap = new Map<number, string[]>();
+                                            initialSlugsMap.set(page, QuestionsQuery.currentData.data.map(({ slug }: IQuestion) => slug));
+
+                                            return initialSlugsMap
+                                        })(),
+                                        filters: filters,
+                                        pagination: {
+                                            page,
+                                            total,
+                                            limit,
+                                            totalPages: Math.ceil(total / limit)
+                                        }
+                                    }
+                                } as ExactQuestionLocationState}
+                            >
+                                Подробнее <ForwardArrow />
+                            </Link>
                         </div>
                     </div>
                 )

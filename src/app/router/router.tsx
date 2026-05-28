@@ -2,7 +2,7 @@ import { createBrowserRouter, /*Navigate*/ } from 'react-router-dom'
 import Layout from '@/app/Layout'
 import HomePage from '@/pages/HomePage/HomePage'
 import ExactQuestionPage from '@/pages/ExactQuestionPage/ExactQuestionPage'
-import QuestionsListPage from '@/pages/QuestionsList/QuestionsListPage'
+import QuestionsListPage from '@/pages/QuestionsListPage/QuestionsListPage'
 
 export const router = createBrowserRouter([
     {

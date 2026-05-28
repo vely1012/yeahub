@@ -1,0 +1,22 @@
+.stat-badge {
+    position: relative;
+
+    font-size: 14px;
+    height: fit-content;
+    padding: 6px 10px;
+    border-radius: 8px;
+
+    display: block;
+
+    background-color: #F8F8F8;
+}
+
+.stat-badge:after {
+    content: var(--content);
+
+    background-color: var(--purp700);
+    color: white;
+    margin-left: 12px;
+    padding: 2px 4px;
+    border-radius: 6px;
+}

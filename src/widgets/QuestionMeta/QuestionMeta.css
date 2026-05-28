@@ -1,0 +1,25 @@
+.meta__section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.meta__section-title {
+    flex-basis: 100%;
+    margin: 0;
+
+    font-weight: 200;
+    font-size: 14px;
+    color: #474747;
+}
+
+.meta__badge {
+    padding: 8px 11px;
+    border: 2px solid var(--purp700);
+    border-radius: 12px;
+}
+
+.meta__highlight {
+    color: var(--purp700);
+    text-decoration: underline;
+}
