@@ -1,3 +1,6 @@
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
 import { useGetSkillsQuery, useGetSpecializationsQuery } from '@/shared/api/baseApi';
 import { useQuestionFilters } from '@/shared/lib/useFilters';
 import type { FilterQueryResult, Specialization, Skill, DifficultyRange } from './types';
@@ -17,13 +20,13 @@ interface FilterRowProps<ItemType> {
 
 function FilterRow<ItemType>({ title, items, renderItem, children, itemsLimit }: FilterRowProps<ItemType>) {
     const [folded, setFolded] = useState(true);
-    
-    if(!children && !renderItem) {
+
+    if (!children && !renderItem) {
         console.error('Rendering error: FilterRow has no renderItem nor children')
         return null
     }
 
-    const mapCallback = (item: ItemType, i: number) => !folded || !itemsLimit || i < itemsLimit ? (children ?? renderItem)!(item): null
+    const mapCallback = (item: ItemType, i: number) => !folded || !itemsLimit || i < itemsLimit ? (children ?? renderItem)!(item) : null
 
     return (
         <div className="filters__section">
@@ -49,6 +52,7 @@ function QueryFilterRow<ItemType>({ query, getItems, Fallback, onError, ...nativ
     const { isLoading, isError } = query;
 
     if (isLoading) {
+    // if (true) {
         return (
             Fallback ? <Fallback /> : null
         );
@@ -59,7 +63,7 @@ function QueryFilterRow<ItemType>({ query, getItems, Fallback, onError, ...nativ
     }
 
     const items = getItems(query);
-    
+
     return <FilterRow<ItemType> items={items} {...nativeProps} />
 }
 
@@ -74,7 +78,7 @@ function Filters({ setSkills }: FiltersProps) {
         // Инициализация при первом рендере (без запроса к API)
         return [];
     });
-    
+
     const specializationsQuery = useGetSpecializationsQuery({});
     const skillsQuery = useGetSkillsQuery({});
 
@@ -89,7 +93,7 @@ function Filters({ setSkills }: FiltersProps) {
     const isInitialized = useRef(false);
     useEffect(() => {
         if (isInitialized.current) return;
-        
+
         if (skillsQuery.data?.data && filters.skills.length > 0) {
             const initialNames = filters.skills
                 .map(id => skillsQuery.data?.data.find((s: Skill) => s.id === id)?.title)
@@ -100,8 +104,8 @@ function Filters({ setSkills }: FiltersProps) {
     }, [skillsQuery.data, filters.skills]);
 
     const toggleSkillName = (skillName: string) => {
-        setSkillNames(prev => 
-            prev.includes(skillName) 
+        setSkillNames(prev =>
+            prev.includes(skillName)
                 ? prev.filter(sn => sn !== skillName)
                 : [...prev, skillName]
         );
@@ -128,6 +132,7 @@ function Filters({ setSkills }: FiltersProps) {
                 title="Специализация"
                 query={specializationsQuery}
                 getItems={(query) => query.data?.data ?? []}
+                Fallback={FilterRowSkeleton}
                 itemsLimit={5}
             >
                 {
@@ -153,6 +158,7 @@ function Filters({ setSkills }: FiltersProps) {
                 title="Категории вопросов"
                 query={skillsQuery}
                 getItems={(query) => query.data?.data ?? []}
+                Fallback={FilterRowSkeleton}
                 itemsLimit={5}
             >
                 {
@@ -194,7 +200,22 @@ function Filters({ setSkills }: FiltersProps) {
             <button type="button" className="filters__reset-btn" onClick={clearFilters}>
                 Сбросить все фильтры
             </button>
-        </> 
+        </>
+    );
+}
+
+function FilterRowSkeleton() {
+    return (
+        <div className="filters__section">
+            <h3 className="filters__section-title">
+                <Skeleton width={120} height={20} />
+            </h3>
+            {
+                Array(7).fill(null).map((_, i: number) => (
+                    <Skeleton key={i} className="filters__toggle-filter" width={125} height={24} style={{ border: "none" }} />
+                ))
+            }
+        </div>
     );
 }
 

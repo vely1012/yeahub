@@ -1,5 +1,9 @@
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
+
 import { useGetQuestionsQuery } from "@/shared/api/baseApi";
-import { useDeferredValue, useState, /*type CSSProperties */} from "react";
+import { useDeferredValue, useState } from "react";
 import DropArrow from '@/assets/icons/menu-arrow.svg?react'
 import ForwardArrow from '@/assets/icons/forward-arrow.svg?react'
 import { Link } from "react-router-dom";
@@ -14,6 +18,7 @@ import type { ExactQuestionLocationState } from "../ExactQuestionPage/ExactQuest
 import './QuestionsListPage.css'
 import AsidePanel from "@/shared/ui/AsidePanel/AsidePanel";
 import StatBadge from "@/shared/ui/StatBadge/StatBadge";
+import FormatedAnswerWidget from '@/widgets/FormatedAnswerWidget/FormatedAnswerWidget';
 
 function QuestionsListPage() {
     const [skills, setSkills] = useState<string[]>([]);
@@ -23,7 +28,7 @@ function QuestionsListPage() {
         <div className="questions-page-container wrapper">
             <main className="questions">
                 <h2 className="questions__header">
-                    <p className="questions__header-text">Вопросы{skills.length > 0 ? (": " + skills.join(', ')  ) : ""}</p>
+                    <p className="questions__header-text">Вопросы{skills.length > 0 ? (": " + skills.join(', ')) : ""}</p>
                     <button type="button" className="questions__toggle-filters-btn" onClick={() => setFiltersActive(prev => !prev)} />
                 </h2>
                 <hr className="questions__hr" />
@@ -39,7 +44,7 @@ function QuestionsListPage() {
 QuestionsListPage.QuestionsContent = function () {
     const { page } = usePage();
     const [activeQuestionId, setActiveQuestionId] = useState<null | number>(null);
-    
+
     const { filters } = useQuestionFilters();
     const { questionSearch } = useQuestionSearch();
     const titleOrDescription = useDeferredValue(questionSearch);
@@ -47,8 +52,25 @@ QuestionsListPage.QuestionsContent = function () {
     const QuestionsQuery = useGetQuestionsQuery({ ...filters, page, titleOrDescription });
 
     if (QuestionsQuery.status === 'pending') {
-        return <h2>spinner</h2>
+        return (
+            <div className="questions__content">
+                {Array(10).fill(null).map((_, index) => (
+                    <div key={index} className="question">
+                        <div className="question__title-wrapper">
+                            <span className="question__title-mark">●</span>
+                            <div style={{ flex: 0.6 }}>
+                                <Skeleton />
+                            </div>
+                            <div style={{ marginLeft: "auto", aspectRatio: 1, width: "1em" }}>
+                                <Skeleton />
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        )
     }
+
     if (QuestionsQuery.status === 'rejected') {
         return <h2>{JSON.stringify(QuestionsQuery.error, null, 4)}</h2>
     }
@@ -66,13 +88,12 @@ QuestionsListPage.QuestionsContent = function () {
                             <DropArrow className="question__title-arrow" />
                         </div>
                         <div className="question__answer">
-                            {/* <span className="question__badge" style={{ '--content': `"${q.rate}"` } as CSSProperties}>Рейтинг:</span>
-                            <span className="question__badge" style={{ '--content': `"${q.rate}"` } as CSSProperties}>Сложность:</span> */}
-                            <StatBadge label="Рейтинг:" stat={q.rate.toString()}/>
-                            <StatBadge label="Сложность:" stat={q.complexity.toString()}/>
-                            
+                            <StatBadge label="Рейтинг:" stat={q.rate.toString()} />
+                            <StatBadge label="Сложность:" stat={q.complexity.toString()} />
+
                             {q.imageSrc ? <img src={q.imageSrc} /> : null}
-                            <p className="question__short-answer">{q.shortAnswer}</p>
+                            {/* <p className="question__short-answer">{q.shortAnswer}</p> */}
+                            <FormatedAnswerWidget content={q.shortAnswer} maxHeight={100} />
                             <Link
                                 className="question__details-link"
                                 to={q.slug}

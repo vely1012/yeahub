@@ -21,6 +21,16 @@
     .filters__container {
         justify-self: end;
     }
+
+    .questions-page-container aside {
+        transform: translate(30px, -40px);
+    }
+}
+
+@media (max-width: 600px) {
+    .questions-page-container aside {
+        transform: translate(10px, -40px);
+    }
 }
 
 .questions {
@@ -95,6 +105,7 @@
 .question__title-mark {
     color: var(--brand-col);
     margin-right: 10px;
+    align-self: center;
 }
 
 .question__title {

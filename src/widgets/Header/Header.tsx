@@ -1,15 +1,17 @@
 import { NavLink, type NavLinkRenderProps } from 'react-router-dom'
+import { useState } from 'react'
 import { YeahubLogo, YeahubTitleLogo } from '@/shared/ui/Logo/YeahubLogos'
 
-import { useState } from 'react'
 import BurgerIcon from "@/assets/icons/burger.svg?react"
 import MenuArrow from '@/assets/icons/menu-arrow.svg?react'
+import LoginIcon from '@/assets/icons/login-icon.svg?react'
 
 import './Header.css'
 import { useClickOutside } from '@/shared/lib/useClickOutside'
 
 function Header() {
     const dropdownRef = useClickOutside<HTMLDivElement>(() => { setDropdownOpen(false) })
+    const authDropdownRef = useClickOutside<HTMLDivElement>(() => { setAuthDropdownOpen(false) })
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [authDropdownOpen, setAuthDropdownOpen] = useState(false);
 
@@ -54,7 +56,7 @@ function Header() {
                 <button className='header__sign-up main-btn'>Регистрация</button>
             </div>
 
-            <div className={"header__auth-dropdown " + (authDropdownOpen ? "header__auth-dropdown_open" : "")}>
+            <div className={"header__auth-dropdown " + (authDropdownOpen ? "header__auth-dropdown_open" : "")} ref={authDropdownRef}>
                 <a className="header__auth-drop-btn" onClick={(e) => {
                     e.preventDefault();
                     setAuthDropdownOpen(prev => !prev)
@@ -62,7 +64,9 @@ function Header() {
                     <BurgerIcon />
                 </a>
                 <div className="header__auth-dropdown-content">
-                    <a className="header__auth-dropdown-link">as;dlknasddf;lkkn</a>
+                    <a href="#" className='header__nav-link'>
+                        <p className="header__nav-text" style={{ display: "flex", alignItems: "center", gap: "10px" }}><LoginIcon className="header__nav-text" />Войти</p>
+                    </a>
                 </div>
             </div>
         </header>

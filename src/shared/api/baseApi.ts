@@ -1,4 +1,4 @@
-import type { Specialization } from '@/widgets/Filters/types';
+import type { Skill, Specialization } from '@/widgets/Filters/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 interface IQuestion {
@@ -12,6 +12,8 @@ interface IQuestion {
   imageSrc?: string,
   slug: string,
   questionSpecializations: Specialization[]
+  questionSkills: Skill[]
+  keywords: string[]
 }
 
 const getBaseUrl = () => {

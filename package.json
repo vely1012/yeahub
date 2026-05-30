@@ -25,6 +25,7 @@
     "github-markdown-css": "^5.9.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-loading-skeleton": "^3.5.0",
     "react-markdown": "^10.1.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.14.2",
@@ -48,7 +49,6 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
     "vite": "^8.0.10",
-    "vite-plugin-svgr": "^5.2.0",
-    "vitest": "^4.1.5"
+    "vite-plugin-svgr": "^5.2.0"
   }
 }

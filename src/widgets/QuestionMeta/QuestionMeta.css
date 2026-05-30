@@ -1,3 +1,9 @@
+.meta {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .meta__section {
     display: flex;
     flex-wrap: wrap;
@@ -17,9 +23,17 @@
     padding: 8px 11px;
     border: 2px solid var(--purp700);
     border-radius: 12px;
+    margin: 0;
 }
 
 .meta__highlight {
     color: var(--purp700);
     text-decoration: underline;
+}
+
+.meta__purp-link {
+    color: var(--purp700) !important;
+    text-decoration: underline;
+    cursor: pointer;
+    word-break: break-word
 }

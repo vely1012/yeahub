@@ -129,41 +129,33 @@ function ExactQuestionPage() {
                 <div className="question-part">
                     <h2 className="question-part__heading">Краткий ответ</h2>
                     {/* <MarkdownRenderer content={question.shortAnswer}/> */}
-                    {/* <p dangerouslySetInnerHTML={{__html: question.shortAnswer}}></p> */}
                     <FormatedAnswerWidget content={question.shortAnswer} omitToggle />
                 </div>
                 <div className="question-part">
                     <h2 className="question-part__heading">Развернутый ответ</h2>
                     <FormatedAnswerWidget content={question.longAnswer} />
                 </div>
-                <GuruQuestionPart />
+                <div className="question-part question-part_guru">
+                    <div className="guru__icon">
+                        <img className="guru__icon-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
+                    </div>
+                    <h4 className="guru__name">Руслан Куянец</h4>
+                    <span className="guru__position">Python Guru</span>
+                    <p className="guru__text">Guru - это эксперты Yeahub, которые помогают развивать комьюнити</p>
+                    <div className="guru__media-links-container">
+                        <a href="#" className="guru__media-link"><TelegramIcon /></a>
+                        <a href="#" className="guru__media-link"><YoutubeIcon /></a>
+                        <a href="#" className="guru__media-link"><ProfileIcon /></a>
+                    </div>
+                </div>
             </main>
             <AsidePanel active={metaAcitve} setActive={setMetaActive}>
-                    <div className="question-part question-part_meta">
-                        <QuestionMeta question={question} />
-                    </div>
-                {/* <GuruQuestionPart /> */}
+                <div className="question-part question-part_meta">
+                    <QuestionMeta question={question} />
+                </div>
             </AsidePanel>
         </div>
     );
-}
-
-function GuruQuestionPart() {
-    return (
-        <div className="question-part question-part_guru">
-            <div className="guru__icon">
-                <img className="guru__icon-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
-            </div>
-            <h4 className="guru__name">Руслан Куянец</h4>
-            <span className="guru__position">Python Guru</span>
-            <p className="guru__text">Guru - это эксперты Yeahub, которые помогают развивать комьюнити</p>
-            <div className="guru__media-links-container">
-                <a href="#" className="guru__media-link"><TelegramIcon /></a>
-                <a href="#" className="guru__media-link"><YoutubeIcon /></a>
-                <a href="#" className="guru__media-link"><ProfileIcon /></a>
-            </div>
-        </div>
-    )
 }
 
 export default ExactQuestionPage;

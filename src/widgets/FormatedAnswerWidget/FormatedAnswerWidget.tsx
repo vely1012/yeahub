@@ -1,4 +1,3 @@
-// widgets/FormatedAnswerWidget/FormatedAnswerWidget.tsx
 import { useState, useRef, useEffect } from 'react';
 import ArrowSvg from '@/assets/icons/menu-arrow.svg?react';
 import './FormatedAnswerWidget.css';
@@ -6,8 +5,8 @@ import './FormatedAnswerWidget.css';
 interface FormatedAnswerWidgetProps {
     content: string;
     maxHeight?: number;
-    omitToggle?: boolean;  // ← исправлено опечатку: ommit → omit
-    defaultExpanded?: boolean;  // ← добавлено: возможность сразу развернуть
+    omitToggle?: boolean;
+    defaultExpanded?: boolean;
 }
 
 function FormatedAnswerWidget({ 
@@ -40,11 +39,14 @@ function FormatedAnswerWidget({
         );
     }
 
+    // Если кнопка не нужна (контент помещается) — показываем без маски и без ограничения высоты
+    const shouldShowMask = needsExpand && !isExpanded;
+
     return (
         <div className="formated-answer">
             <div 
-                className={`formated-answer__text ${isExpanded ? 'expanded' : ''}`}
-                style={{ maxHeight: isExpanded ? 'none' : `${maxHeight}px` }}
+                className={`formated-answer__text ${shouldShowMask ? 'collapsed' : 'expanded'}`}
+                style={{ maxHeight: shouldShowMask ? `${maxHeight}px` : 'none' }}
             >
                 <div 
                     ref={contentRef}
